@@ -1,4 +1,3 @@
-// O Edson é professor
 package controller;
 
 import bean.Aluno;
