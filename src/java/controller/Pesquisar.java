@@ -1,3 +1,4 @@
+// O Edson é professor
 package controller;
 
 import bean.Aluno;
@@ -79,6 +80,7 @@ public class Pesquisar extends HttpServlet {
         String valorDigitado = request.getParameter("valor");
 
         // validação dos dados enviados
+        // se o comprimento de valor for igual a zero, redireciona
         if (valorDigitado.length() == 0) {
             request.setAttribute("mensagem", "Digite um valor para pesquisar...");
             request.getRequestDispatcher("view_pesquisar.jsp").
