@@ -55,7 +55,14 @@ public class Pesquisar extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        // se for chamado via URL, entào enviamos para a index.jsp
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        
+        request.getRequestDispatcher("index.jsp").
+                    forward(request, response);
     }
 
     /**
