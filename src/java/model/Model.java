@@ -84,7 +84,7 @@ public class Model implements Serializable {
                     sql = "SELECT * FROM alunos WHERE curso LIKE ? ORDER BY nome ASC;";
                     ps = connection.prepareStatement(sql);
                     ps.setString(1, "%" + aluno.getCurso() + "%");
-                    break;                    
+                    break;
             }
 
             // executar a consulta no banco
@@ -111,6 +111,29 @@ public class Model implements Serializable {
 
         // retorna a lista de alunos
         return alunos;
+    }
+
+    // método que insere registros no BD
+    public void inserir(Aluno aluno) {
+        try {
+            String sql = "INSERT INTO alunos (ra,nome,curso) VALUES (?,?,?);";
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                // atribuição dos valores do objeto "Aluno" ao "ps"
+                ps.setString(1, aluno.getRa());
+                ps.setString(2, aluno.getNome());
+                ps.setString(3, aluno.getCurso());
+
+                // executar a inclusão
+                ps.execute();
+
+                // fechar o statement (ps)
+                ps.close();
+            }
+            connection.close(); // fecha a conexão com o banco
+            this.statusMessage = "Incluído com sucesso";
+        } catch (SQLException ex) {
+            this.statusMessage = "Falha ao inserir: " + ex.getMessage();
+        }
     }
 
     @Override // sobrescrita de método

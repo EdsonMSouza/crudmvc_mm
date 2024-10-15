@@ -8,7 +8,7 @@
     Cadastrar Usuário
 </div>
 
-<form name="cadastrar" method="post" action="Controller">
+<form name="cadastrar" method="post" action="Inserir">
     <div class="row">
         <div class="col-md-5 mb-3">
             <label>RA</label>
@@ -37,7 +37,13 @@
                 value="Cadastrar"/>
         </div>
     </div>
-    <span class="erro"><c:out value = "${mensagem}" /></span>
+    <!--    <span class="erro"><c:out value = "${mensagem}" /></span>-->
+    
+    <!-- Lista os erros capturas do Servlet -->
+    <c:forEach var="valor" items="${mensagem}">
+        <c:out value="${valor}" /><br>
+    </c:forEach>
+    
 </form>
 
 <c:import url="rodape.jsp" />

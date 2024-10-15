@@ -1,15 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
+import bean.Aluno;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import model.Model;
 
 /**
  *
@@ -69,7 +69,67 @@ public class Inserir extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        // como vamos usar o Model, então temos que tratar os erros de SQL
+        try {
+            // passar os valores recebidos do formulário para o objeto Aluno
+            Aluno aluno = new Aluno();
+            // atribui os valores, mas antes vamos tratar os dados
+            // ra, nome e curso
+
+            // capturando os dados do formulário
+            String ra = request.getParameter("ra");
+            String nome = request.getParameter("nome");
+            String curso = request.getParameter("curso");
+
+            // Armazena os erros capturados
+            ArrayList<String> erros = new ArrayList();
+
+            // Verifica se os campos estão vazios
+            //if (ra.isEmpty()) {
+            //    erros.add("Preencha o campo RA");
+            //}
+            // trim retira todos os espaços do início e do fim da string
+            if (ra == null || ra.trim().isEmpty()) {
+                erros.add("Preencha o campo RA");
+            }
+
+            if (nome.isEmpty()) {
+                erros.add("Preencha o campo NOME");
+            }
+
+            if (curso.isEmpty()) {
+                erros.add("Preencha o campo CURSO");
+            }
+
+            if (!erros.isEmpty()) {
+                request.setAttribute("mensagem", erros);
+                request.getRequestDispatcher("view_cadastrar.jsp").forward(request, response);
+            }
+
+            // Se chegou até aqui, é porque podemos gravar
+            // Passar os valores recebidos para o objeto
+            aluno.setRa(ra);
+            aluno.setNome(nome);
+            aluno.setCurso(curso);
+
+            // Instancia o Model
+            Model alunoModel = new Model();
+
+            // invoca o método inserir() passando o aluno como parâmetro
+            alunoModel.inserir(aluno);
+
+            // mensagem de aviso: deu bom!
+            request.setAttribute("mensagem", alunoModel.toString());
+
+        } catch (SQLException ex) {
+            // retornando a mensagem de erro ao usuário (view)
+            request.setAttribute("mensagem", ex.getMessage());
+        }
+
+        // se chegou até aqui, é porque deu tudo certo, então....
+        request.getRequestDispatcher("view_mensagem.jsp").forward(request, response);
+
     }
 
     /**
