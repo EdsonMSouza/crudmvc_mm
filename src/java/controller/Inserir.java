@@ -116,14 +116,21 @@ public class Inserir extends HttpServlet {
             // Instancia o Model
             Model alunoModel = new Model();
 
+            // antes de inserir, pesquisar para ver se já não existe
+            if (alunoModel.pesquisar(aluno, "ra").size() > 0) {
+                request.setAttribute("mensagem", "O RA já existe.");
+                request.getRequestDispatcher("view_cadastrar.jsp").forward(request, response);
+            }
+
             // invoca o método inserir() passando o aluno como parâmetro
             alunoModel.inserir(aluno);
 
             // mensagem de aviso: deu bom!
             request.setAttribute("mensagem", alunoModel.toString());
+            
 
         } catch (SQLException ex) {
-            // retornando a mensagem de erro ao usuário (view)
+            // retornando a mensagem de erro ao usuário (view)            
             request.setAttribute("mensagem", ex.getMessage());
         }
 

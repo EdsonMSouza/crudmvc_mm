@@ -131,8 +131,10 @@ public class Model implements Serializable {
             }
             connection.close(); // fecha a conexão com o banco
             this.statusMessage = "Incluído com sucesso";
+            
         } catch (SQLException ex) {
-            this.statusMessage = "Falha ao inserir: " + ex.getMessage();
+            //this.statusMessage = "Falha ao inserir: " + ex.getMessage();
+            this.statusMessage = String.valueOf(ex.getErrorCode());
         }
     }
 
