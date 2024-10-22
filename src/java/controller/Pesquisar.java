@@ -122,6 +122,8 @@ public class Pesquisar extends HttpServlet {
         try {
             // chamar o  Model (construtor)
             Model alunoModel = new Model();
+            
+            // gravar no log 012676/22/10/204/10:24/ra/IP de quem pesquisou
 
             // atribuindo os valores retornados do Model para uma variável
             List<Aluno> alunosDados;
