@@ -69,11 +69,15 @@ public class Inserir extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        
         // como vamos usar o Model, então temos que tratar os erros de SQL
         try {
             // passar os valores recebidos do formulário para o objeto Aluno
-            Aluno aluno = new Aluno();
+            //Aluno aluno = new Aluno();
             // atribui os valores, mas antes vamos tratar os dados
             // ra, nome e curso
 
@@ -107,11 +111,14 @@ public class Inserir extends HttpServlet {
                 request.getRequestDispatcher("view_cadastrar.jsp").forward(request, response);
             }
 
-            // Se chegou até aqui, é porque podemos gravar
+            // Se chegou até aqui, é porque podemos continuar
             // Passar os valores recebidos para o objeto
-            aluno.setRa(ra);
-            aluno.setNome(nome);
-            aluno.setCurso(curso);
+            //aluno.setRa(ra);
+            //aluno.setNome(nome);
+            //aluno.setCurso(curso);
+            
+            // chamando o construtor da classe Aluno
+            Aluno aluno = new Aluno(ra, nome, curso);
 
             // Instancia o Model
             Model alunoModel = new Model();
@@ -127,7 +134,6 @@ public class Inserir extends HttpServlet {
 
             // mensagem de aviso: deu bom!
             request.setAttribute("mensagem", alunoModel.toString());
-            
 
         } catch (SQLException ex) {
             // retornando a mensagem de erro ao usuário (view)            

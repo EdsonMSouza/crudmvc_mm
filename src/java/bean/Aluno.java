@@ -4,20 +4,27 @@ package bean;
 
 // Vamos usar uma interface, pois objetos trafegados na web precisam estar
 // serializados em um fluxo de bytes (arquivo).
-
 import java.io.Serializable;
 
-public class Aluno implements Serializable{
+public class Aluno implements Serializable {
+
     private int id;
     private String ra;
     private String nome;
     private String curso;
-    
-    // método construtor vazio
-    public Aluno(){}
-    
-    // gets and sets
 
+    // método construtor vazio
+    public Aluno() {
+    }
+
+    // construtor valorado (sobrecarga)
+    public Aluno(String ra, String nome, String curso) {
+        this.ra = ra;
+        this.nome = nome;
+        this.curso = curso;
+    }
+
+    // gets and sets
     public int getId() {
         return id;
     }
@@ -50,6 +57,4 @@ public class Aluno implements Serializable{
         this.curso = curso;
     }
 
-
-    
 }
