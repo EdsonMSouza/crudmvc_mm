@@ -12,19 +12,22 @@
     <div class="row">
         <div class="col-md-5 mb-3">
             <label>RA</label>
-            <input type="text" class="form-control" name="ra" />
+            <input type="text" class="form-control" name="ra" required value="${ra != null ? ra : ''}" />
+            <span class="erro">${ra_msg}</span>
         </div>
     </div>
     <div class="row">
         <div class="col-md-5 mb-3">
             <label>NOME</label>
-            <input type="text" class="form-control" name="nome" />
+            <input type="text" class="form-control" name="nome" value="${nome != null ? nome : ''}"/>
+            <span class="erro">${nome_msg}</span>
         </div>
     </div>
     <div class="row">
         <div class="col-md-5 mb-3">
             <label>CURSO</label>
-            <input type="text" class="form-control" name="curso" />
+            <input type="text" class="form-control" name="curso" value="${curso != null ? curso : ''}"/>
+            <span class="erro">${curso_msg}</span>
         </div>
     </div>
     <div class="row">
@@ -36,14 +39,7 @@
                 name="bt_enviar"
                 value="Cadastrar"/>
         </div>
-    </div>
-    <!--    <span class="erro"><c:out value = "${mensagem}" /></span>-->
-    
-    <!-- Lista os erros capturas do Servlet -->
-    <c:forEach var="valor" items="${mensagem}">
-        <c:out value="${valor}" /><br>
-    </c:forEach>
-    
+    </div>    
 </form>
 
 <c:import url="rodape.jsp" />

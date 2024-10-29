@@ -96,17 +96,26 @@ public class Inserir extends HttpServlet {
             // trim retira todos os espaços do início e do fim da string
             if (ra == null || ra.trim().isEmpty()) {
                 erros.add("Preencha o campo RA");
+                request.setAttribute("ra_msg", "Preencha com o RA");
             }
 
             if (nome.isEmpty()) {
                 erros.add("Preencha o campo NOME");
+                request.setAttribute("nome_msg", "Preencha com o Nome");
             }
 
             if (curso.isEmpty()) {
                 erros.add("Preencha o campo CURSO");
+                request.setAttribute("curso_msg", "Preencha com o Curso");
             }
 
+            // retorna erro se não preenchido
             if (!erros.isEmpty()) {
+                // preenchimento automático dos campos
+                request.setAttribute("ra", ra);
+                request.setAttribute("nome", nome);
+                request.setAttribute("curso", curso);
+                
                 request.setAttribute("mensagem", erros);
                 request.getRequestDispatcher("view_cadastrar.jsp").forward(request, response);
             }
@@ -125,7 +134,14 @@ public class Inserir extends HttpServlet {
 
             // antes de inserir, pesquisar para ver se já não existe
             if (alunoModel.pesquisar(aluno, "ra").size() > 0) {
-                request.setAttribute("mensagem", "O RA já existe.");
+                
+                // preenchimento automático dos campos
+                request.setAttribute("ra", ra);
+                request.setAttribute("nome", nome);
+                request.setAttribute("curso", curso);
+                
+                // mensagem de aviso
+                request.setAttribute("ra_msg", "O RA já existe.");
                 request.getRequestDispatcher("view_cadastrar.jsp").forward(request, response);
             }
 
